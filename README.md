@@ -45,22 +45,13 @@ NOTE:
 
 **NOTE:**
 
-Some required libs:
+**Some required libs:**
 
 * Linux (Ubuntu 14.04 and 16.04):
 
 ```bash
 sudo apt-get install git-core cmake freeglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev cython
 ```
-
-* Linux (Ubuntu 18.04+):
-
-```bash
-sudo apt-get install git-core cmake libglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev cython
-```
-
-
-Tested on: `ubuntu 14.04`, `ubuntu 16.04`, `ubuntu 18.04`, `lubuntu 18.04` and `raspbian`.
 
 `freenect` requires `cmake 3.12.4+`. `Ubuntu 14.04 and 16.04` use `cmake 3.5.1` by default. Some `APT` repositories offers the last `cmake` version like:
 
@@ -71,6 +62,13 @@ wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc |
 sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main'
 sudo apt-get update
 sudo apt-get install cmake
+```
+
+
+* Linux (Ubuntu 18.04+):
+
+```bash
+sudo apt-get install git-core cmake libglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev cython
 ```
 
 **Some possible errors:**
@@ -101,8 +99,7 @@ sudo adduser $USER video
 ```bash
 sudo nano /etc/udev/rules.d/51-kinect.rules
 ```
-
-Paste:
+And paste:
 
 ```bash
 # ATTR{product}=="Xbox NUI Motor"
