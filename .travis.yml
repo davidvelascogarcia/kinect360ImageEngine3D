@@ -35,10 +35,6 @@ before_install:
   - if [ ! `git config --get user.email` ]; then `git config --global user.email 'user@example.com'`; fi
   - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
 
-# En caso de requerir instalar algo para la prueba
-
-install:
-
 # Instalar CMAKE
    - wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc |
     sudo apt-key add -
