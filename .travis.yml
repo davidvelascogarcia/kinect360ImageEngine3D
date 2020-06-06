@@ -36,8 +36,7 @@ before_install:
   - if [ ! `git config --get user.name` ]; then `git config --global user.name 'Travis CI'`; fi
 
 # Instalar CMAKE
-   - wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc |
-    sudo apt-key add -
+   - wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
    - sudo apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main'
    - sudo apt-get update
    - sudo apt-get install cmake
