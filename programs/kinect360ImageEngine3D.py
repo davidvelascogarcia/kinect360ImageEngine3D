@@ -12,7 +12,6 @@
   * | /kinect360ImageEngine3D/depthColor/img:o  | Output depth with proximity colors image                |
   * | /kinect360ImageEngine3D/ir/img:o          | Output IR image                                         |
   * | /kinect360ImageEngine3D/data:o            | Output pixel depth data in matrix                       |
-  *
 '''
 
 # Libraries
@@ -33,18 +32,18 @@ print("*************************************************************************
 print("**************************************************************************")
 
 print("")
-print("Starting system...")
+print("Starting system ...")
+print("")
 
 print("")
-print("Loading kinect360ImageEngine3D module...")
+print("Loading kinect360ImageEngine3D module ...")
+print("")
 
 # Select configuration mode, IR and RGB use same channel and go slow at the same time
-print("")
 print("")
 print("**************************************************************************")
 print("Video sources configuration:")
 print("**************************************************************************")
-print("")
 print("")
 print("Please, select your configuration.")
 print("")
@@ -62,7 +61,7 @@ while int(loopControlConfiguration) == 0:
     # Selected RGB
     if str(configurationSelected) == "1":
         print("")
-        print("You have selected RGB and depth camera configuration.")
+        print("[INFO] You have selected RGB and depth camera configuration.")
         print("")
 
         # Exit loop
@@ -71,7 +70,7 @@ while int(loopControlConfiguration) == 0:
     # Selected IR
     elif str(configurationSelected) == "2":
         print("")
-        print("You have selected IR and depth camera configuration.")
+        print("[INFO] You have selected IR and depth camera configuration.")
         print("")
 
         # Exit loop
@@ -80,7 +79,7 @@ while int(loopControlConfiguration) == 0:
     # Configuration not supported
     else:
         print("")
-        print("Sorry, option not supported, re-enter configuration mode.")
+        print("[ERROR] Sorry, option not supported, re-enter configuration mode.")
         print("")
 
 print("")
@@ -89,134 +88,100 @@ print("")
 
 
 print("")
-print("")
 print("**************************************************************************")
 print("YARP configuration:")
 print("**************************************************************************")
 print("")
+print("Initializing YARP network ...")
 print("")
-print("Initializing YARP network...")
 
 # Init YARP Network
 yarp.Network.init()
 
 # If RGB was selected
 if str(configurationSelected) == "1":
+
     print("")
     print("[INFO] Opening RGB image output port with name /kinect360ImageEngine3D/rgb/img:o ...")
+    print("")
 
-    # Open output image port
+    # Open kinect360ImageEngine3D output image port
     kinect360ImageEngine3D_rgb_portOut = yarp.Port()
     kinect360ImageEngine3D_rgb_portNameOut = '/kinect360ImageEngine3D/rgb/img:o'
     kinect360ImageEngine3D_rgb_portOut.open(kinect360ImageEngine3D_rgb_portNameOut)
 
 print("")
 print("[INFO] Opening depth image output port with name /kinect360ImageEngine3D/depth/img:o ...")
+print("")
 
-# Open output image port
+# Open kinect360ImageEngine3D output image port
 kinect360ImageEngine3D_depth_portOut = yarp.Port()
 kinect360ImageEngine3D_depth_portNameOut = '/kinect360ImageEngine3D/depth/img:o'
 kinect360ImageEngine3D_depth_portOut.open(kinect360ImageEngine3D_depth_portNameOut)
-
-"""
-print("")
-print("[INFO] Opening depth color image output port with name /kinect360ImageEngine3D/depthColor/img:o ...")
-
-# Open output image port
-kinect360ImageEngine3D_depthColor_portOut = yarp.Port()
-kinect360ImageEngine3D_depthColor_portNameOut = '/kinect360ImageEngine3D/depthColor/img:o'
-kinect360ImageEngine3D_depthColor_portOut.open(kinect360ImageEngine3D_depthColor_portNameOut)
-"""
 
 # If IR was selected
 if str(configurationSelected) == "2":
     print("")
     print("[INFO] Opening IR image output port with name /kinect360ImageEngine3D/ir/img:o ...")
+    print("")
 
-    # Open output image port
+    # Open kinect360ImageEngine3D output image port
     kinect360ImageEngine3D_ir_portOut = yarp.Port()
     kinect360ImageEngine3D_ir_portNameOut = '/kinect360ImageEngine3D/ir/img:o'
     kinect360ImageEngine3D_ir_portOut.open(kinect360ImageEngine3D_ir_portNameOut)
-
-"""
-print("")
-print("[INFO] Opening pixel depth data in matrix output port with name /kinect360ImageEngine3D/data:o ...")
-
-# Open output image port
-kinect360ImageEngine3D_data_portOut = yarp.Port()
-kinect360ImageEngine3D_data_portNameOut = '/kinect360ImageEngine3D/data:o'
-kinect360ImageEngine3D_data_portOut.open(kinect360ImageEngine3D_data_portNameOut)
-"""
-
-# Create depth distance bootle
-depthDistanceBottle=yarp.Bottle()
 
 # Image size
 image_w = 640
 image_h = 480
 
-# Prepare output image buffer
+# Prepare kinect360ImageEngine3D output image buffer
 out_buf_image = yarp.ImageRgb()
 out_buf_image.resize(image_w, image_h)
 out_buf_array = np.zeros((image_h, image_w, 3), np.uint8)
 out_buf_image.setExternal(out_buf_array.data, out_buf_array.shape[1], out_buf_array.shape[0])
 
-
 print("")
+print("[INFO] YARP network configured correctly.")
+print("")
+
 print("")
 print("**************************************************************************")
 print("Connecting with Kinect 360 3D image source:")
 print("**************************************************************************")
 print("")
-print("")
-print("Connecting with Kinect 360 3D image source ...")
+print("[INFO] Connecting with Kinect 360 3D image source ...")
 print("")
 
 
 loopControlGetImage = 0
 
+print("")
+print("[INFO] Connection done correctly at " + str(datetime.datetime.now()) + ".")
+print("")
+
 # Loop process
-while True:
+while int(loopControlGetImage) == 0:
 
-
-    print("")
     print("")
     print("**************************************************************************")
     print("Getting images from Kinect 360 3D image source:")
     print("**************************************************************************")
     print("")
+    print("[INFO] Getting images from Kinect 360 3D image source  at " + str(datetime.datetime.now()) + " ...")
     print("")
-    print("Getting images from Kinect 360 3D image source ...")
-    print("")
 
-    # Get time frame
-    timeFrame = datetime.datetime.now()
 
-    """
-    # Prepare depth distance data
-    depthDistanceData = "null"
-
-    # Sending depth distance data
-    depthDistanceBottle.clear()
-    depthDistanceBottle.addString(str(depthDistanceData))
-    kinect360ImageEngine3D_data_portOut.write(depthDistanceBottle)
-    """
-
-    print("")
     print("")
     print("**************************************************************************")
     print("Sending images:")
     print("**************************************************************************")
     print("")
-    print("")
-
-    # Sending Kinect 360 Images
-    print("")
-    print("Sending Kinect 360 Images ...")
+    print("[INFO] Sending Kinect 360 Images at " + str(datetime.datetime.now()) + " ...")
     print("")
 
     # If RGB was selected
     if str(configurationSelected) == "1":
+
         # Get and send RGB image
         try:
             print("")
@@ -224,21 +189,22 @@ while True:
             print("RGB image:")
             print("**************************************************************************")
             print("")
-            print("")
-            print("Getting RGB image ...")
+            print("[INFO] Getting RGB image  at " + str(datetime.datetime.now()) + " ...")
             print("")
 
             # Get RGB images
             rgbImageSource,_ = freenect.sync_get_video()
             outputRGBImage = cv2.cvtColor(rgbImageSource, cv2.COLOR_RGB2BGR)
+
             print("")
             print("[INFO] RGB image obtained correctly.")
             print("")
 
             # Send RGB image
             print("")
-            print("Sending RGB image at " + str(timeFrame) + "...")
+            print("[INFO] Sending RGB image  at " + str(datetime.datetime.now()) + " ...")
             print("")
+
             out_buf_array[:,:] = rgbImageSource
             rgbImage = out_buf_image
             kinect360ImageEngine3D_rgb_portOut.write(rgbImage)
@@ -256,22 +222,23 @@ while True:
         print("Depth image:")
         print("**************************************************************************")
         print("")
-        print("")
-        print("Getting depth image ...")
+        print("[INFO] Getting depth image  at " + str(datetime.datetime.now()) + " ...")
         print("")
 
         # Get depth images
         depthImageSource,_ = freenect.sync_get_depth()
         outputDepthImage = depthImageSource.astype(np.uint8)
         outputDepthImage = cv2.cvtColor(outputDepthImage, cv2.COLOR_GRAY2RGB)
+
         print("")
         print("[INFO] Depth image obtained correctly.")
         print("")
 
         # Send depth image
         print("")
-        print("Sending depth image at " + str(timeFrame) + "...")
+        print("[INFO] Sending depth image  at " + str(datetime.datetime.now()) + " ...")
         print("")
+
         out_buf_array[:,:] = outputDepthImage
         depthImage = out_buf_image
         kinect360ImageEngine3D_depth_portOut.write(depthImage)
@@ -284,6 +251,7 @@ while True:
 
     # If IR was selected
     if str(configurationSelected) == "2":
+
         # Get and send IR image
         try:
             print("")
@@ -291,8 +259,7 @@ while True:
             print("IR image:")
             print("**************************************************************************")
             print("")
-            print("")
-            print("Getting IR image ...")
+            print("[INFO] Getting IR image at " + str(datetime.datetime.now()) + " ...")
             print("")
 
             # Get IR images
@@ -301,14 +268,16 @@ while True:
             irImageSource >>=2
             outputIRImage = irImageSource.astype(np.uint8)
             outputIRImage = cv2.cvtColor(outputIRImage, cv2.COLOR_GRAY2RGB)
+
             print("")
             print("[INFO] IR image obtained correctly.")
             print("")
 
             # Send IR image
             print("")
-            print("Sending IR image at " + str(timeFrame) + "...")
+            print("[INFO] Sending IR image at " + str(datetime.datetime.now()) + " ...")
             print("")
+
             out_buf_array[:,:] = outputIRImage
             irImage = out_buf_image
             kinect360ImageEngine3D_ir_portOut.write(irImage)
@@ -321,26 +290,19 @@ while True:
 
 # Close ports
 print("")
-print("")
-print("**************************************************************************")
-print("Close YARP ports:")
-print("**************************************************************************")
-print("")
-print("")
 print("[INFO] Closing YARP ports ...")
+print("")
 
 # If RGB was selected
 if str(configurationSelected) == "1":
     kinect360ImageEngine3D_rgb_portOut.close()
 
 kinect360ImageEngine3D_depth_portOut.close()
-#kinect360ImageEngine3D_depthColor_portOut.close()
 
 # If IR was selected
 if str(configurationSelected) == "2":
     kinect360ImageEngine3D_ir_portOut.close()
 
-#kinect360ImageEngine3D_data_portOut.close()
 
 print("")
 print("")
